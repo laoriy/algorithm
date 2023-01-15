@@ -69,4 +69,20 @@
 -   让 p 等于 head,当 p.val === p.next.val 将 p.next 指向 p.next.next 否则，将 p 移动到 p.next
 
 82. 删除排序链表中的重复元素 --只要出现过重复就全部删掉
-    // todo
+
+-   由于头节点可能被删除，因此加一个虚拟节点 ret
+-   变量 p 等于 ret 如果 p.next && p.next.next 的时候进行遍历
+-   如果 p.next 的 val 等于 p.next.next.val 时，将该值记录为 x、如果 p.next && p.next.val === x 时进行遍历，并将 p.next 指向 p.next.next（指针移动），这次遍历结束时，p.next.val 肯定是一个新值
+-   反之，p = p.next。此时 p.next 已经是一个不重复的新值。进入下一次外层遍历。
+
+### 复习
+
+86. 分隔链表 小于 x 的放左边
+
+-   构造两个链表头，分别为 small 和 large。然后变量 smallHead 指向 small , 变量 largeHead 指向 small。
+-   设置指针 p 遍历原链表，小于 x 的让 smallHead.next 指向 p,此时相当于 small.next 指向 p，然后 smallHead = p。大于 x 的逻辑一样;
+-   最终将 largeHead.next 指向 null , smallHead.next = large.next 最后返回 small.nex
+
+138. 复制带随机指针的链表
+- 每个节点复制一个然后连接到原节点的后面，成为一个链表。这时候复制节点的random节点即为源节点的random节点的next。
+- 再讲链表拆成两个独立的链表
