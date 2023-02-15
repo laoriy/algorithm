@@ -17,13 +17,13 @@
      - 完全二叉树：只有在最后一层的右侧是缺少节点的，左侧是满节点的
      - 满二叉树：没有度为 1 的节点，只有度为 0 或者度为 2 的节点。
      - 完美二叉树：深度为 k 的所有节点都满了。
-    - 完全二叉树：
-        1. 编号为`i`的子节点，左孩子编号为：`2i`，右孩子编号为 `2i + 1`
-        2. 不需要存储left，right子树地址，可以节省存储空间。记录式（节省时间） --> 计算式（节省空间）
-        3. 可以用连续空间存储（数组）
+   - 完全二叉树：
+     1. 编号为`i`的子节点，左孩子编号为：`2i`，右孩子编号为 `2i + 1`
+     2. 不需要存储 left，right 子树地址，可以节省存储空间。记录式（节省时间） --> 计算式（节省空间）
+     3. 可以用连续空间存储（数组）
 
-         
 ### 树的深入理解：
+
 1. 树的节点代表集合
 2. 树的边代表关系
 
@@ -32,36 +32,113 @@
 1. 见 index.js 生成长度为 n 的随机的二叉树。
 
 ### 树的作用
+
 1. 它理解高级数据结构的基础
- ![image](./images/effect-1.jpg)
+   ![image](./images/effect-1.jpg)
 2. 练习递归技巧的最佳选择
 
-    设计、理解递归程序
+   设计、理解递归程序
 
-    1. 数学归纳法-> 结构归纳法
-    2. 赋予递归函数一个明确的意义
-    3. 思考边界条件
-    4. 实现递归过程
+   1. 数学归纳法-> 结构归纳法
+   2. 赋予递归函数一个明确的意义
+   3. 思考边界条件
+   4. 实现递归过程
 
-        -------->
+      -------->
 
-    二叉树的前序遍历：
-    1. 函数意义：前序遍历以root为根结点的二叉树
-    2. 边界条件，root为空时不需要遍历
-    3. 递归过程：前序遍历左子树，前序遍历右子树
+   二叉树的前序遍历：
 
-3. 左孩子右兄弟表示法省空间，三叉树（多叉树）转二叉树，因为二叉树浪费的空指针域最少。n个节点有n-1条边，k叉树总边为kn, 浪费的边为(k-1)n + 1;
-    
+   1. 函数意义：前序遍历以 root 为根结点的二叉树
+   2. 边界条件，root 为空时不需要遍历
+   3. 递归过程：前序遍历左子树，前序遍历右子树
+
+3. 左孩子右兄弟表示法省空间，三叉树（多叉树）转二叉树，因为二叉树浪费的空指针域最少。n 个节点有 n-1 条边，k 叉树总边为 kn, 浪费的边为(k-1)n + 1;
 
 ### 经典面试题
 
 144. 二叉树的前序遍历
-589. N 叉树的前序遍历
-226. 翻转二叉树
-剑指 Offer 32 - I. 从上到下打印二叉树
-107. 二叉树的层序遍历 II
-103. 二叉树的锯齿形层序遍历
+145. N 叉树的前序遍历
+146. 翻转二叉树
+     剑指 Offer 32 - I. 从上到下打印二叉树
+147. 二叉树的层序遍历 II
+148. 二叉树的锯齿形层序遍历
 
-#### 进阶面试题
+### 进阶面试题
 
-110. 
+110. 平衡二叉树
+
+```TS
+
+function isBalanced(root: TreeNode | null): boolean {
+    const res = {
+        isB:true,
+    }
+   getHeight(root, res)
+   return res.isB
+};
+/**
+    获取树高
+ */
+function getHeight(root: TreeNode | null, res){
+    if(root === null) return 0
+    let l = getHeight(root.left, res)
+    let r = getHeight(root.right, res)
+    if(res.isB){
+        res.isB = Math.abs(l-r) <= 1 // 是不是平衡
+    }
+
+    return Math.max(l,r) + 1
+}
+```
+
+```TS
+function isBalanced(root: TreeNode | null): boolean {
+   return getHeight(root) >= 0
+};
+/**
+    获取树高
+ */
+function getHeight(root: TreeNode | null){
+    if(root === null) return 0
+    let l = getHeight(root.left)
+    let r = getHeight(root.right)
+
+    if(l < 0 || r < 0)  return -2 // 不平衡
+    if(Math.abs(l-r) > 1 ) return -2 // 不平衡
+    return Math.max(l,r) + 1
+}
+```
+
+112. 二叉树路径总和
+
+```ts
+// 只有left和right节点都为空，才校验是不是和targetSum相同
+function hasPathSum(root: TreeNode | null, targetSum: number): boolean {
+    if (!root) return false;
+    if (!root.left && !root.right) return root.val === targetSum;
+    if (root.left && hasPathSum(root.left, targetSum - root.val)) return true;
+    if (root.right && hasPathSum(root.right, targetSum - root.val)) return true;
+    return false;
+}
+```
+
+```ts
+function hasPathSum(root: TreeNode | null, targetSum: number): boolean {
+    if(root === null) return false
+    let res = false
+    const  dfs = (root,sum) => {
+        if(!root) return
+        if(sum === targetSum && !root.left && !root.right){
+            res = true
+            return
+        }
+        if(root.left) dfs(root.left,sum + root.left.val)
+        if(root.right) dfs(root.right,sum + root.right.val)
+    }
+    dfs(root, root.val)
+    return res
+
+};
+```
+
+105. 从前序与中序遍历序列构造二叉树
