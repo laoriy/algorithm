@@ -142,3 +142,32 @@ function hasPathSum(root: TreeNode | null, targetSum: number): boolean {
 ```
 
 105. 从前序与中序遍历序列构造二叉树
+```js
+function buildTree(preorder: number[], inorder: number[]): TreeNode | null {
+    const len = preorder.length
+    if(len === 0) return null
+    let rootVal = preorder[0]
+    let root = new TreeNode(rootVal)
+    let rootIndex = 0;
+    for(let i = 0;i< inorder.length;i++){
+        if(inorder[i] === rootVal) {
+            rootIndex = i
+            break;
+        } 
+    }
+    root.left = buildTree(preorder.slice(1,rootIndex + 1),inorder.slice(0,rootIndex))
+    root.right = buildTree(preorder.slice(rootIndex + 1),inorder.slice(rootIndex + 1))
+    return root
+};
+```
+
+222. 完全二叉树的节点个数
+
+```js
+function countNodes(root: TreeNode | null): number {
+    if(root === null) return 0
+    return 1 + countNodes(root.left) + countNodes(root.right)
+};
+```
+
+
