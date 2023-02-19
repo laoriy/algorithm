@@ -22,6 +22,8 @@
      2. 不需要存储 left，right 子树地址，可以节省存储空间。记录式（节省时间） --> 计算式（节省空间）
      3. 可以用连续空间存储（数组）
 
+5. `二叉搜索树`是具有下列性质的二叉树： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值； 它的左、右子树也分别为二叉排序树
+
 ### 树的深入理解：
 
 1. 树的节点代表集合
@@ -170,4 +172,51 @@ function countNodes(root: TreeNode | null): number {
 };
 ```
 
+剑指 Offer 54. 二叉搜索树的第k大节点
+- 根据二叉搜索树的特点，中序遍历结果就是一个有序的序列
 
+```ts
+function getNodeCount(root: TreeNode | null){
+    if(root === null) return 0
+    return getNodeCount(root.left) + getNodeCount(root.right) + 1
+}
+
+function kthLargest(root: TreeNode | null, k: number): number {
+    const cnt_r = getNodeCount(root.right)
+    if(k<=cnt_r) return kthLargest(root.right,k)
+    if(k === cnt_r + 1) return root.val
+    return kthLargest(root.left,k - cnt_r - 1)
+};
+```
+
+剑指 Offer 26. 树的子结构
+
+```ts
+function isMatch(A: TreeNode | null, B: TreeNode | null){
+    if(B === null) return true
+    if(A === null) return false
+    if(A.val !== B.val) return false
+    return isMatch(A.left,B.left) && isMatch(A.right,B.right)
+}
+
+function isSubStructure(A: TreeNode | null, B: TreeNode | null): boolean {
+    if(A == null || B == null) return false
+    if(A.val === B.val && isMatch(A,B)) return true 
+    return isSubStructure(A.left,B) ||isSubStructure(A.right,B)
+};
+```
+
+
+
+
+### 进阶面试题
+
+662. 二叉树的最大宽度
+
+- 根据完全二叉树的特点，给定跟节点编号为0，依次计算出每个节点的编号
+- 用一个栈存每行的节点及该节点的编号。再遍历得出这一行的l，r编号。
+- 遍历完一行时通过l和r求出改行的宽度。
+- 注意大数问题，
+
+
+968. 监控二叉树
