@@ -220,3 +220,41 @@ function isSubStructure(A: TreeNode | null, B: TreeNode | null): boolean {
 
 
 968. 监控二叉树
+
+```ts
+function getDp(root: TreeNode | null,dp:number[][]){
+    // 计算当前节点（含以下）的摄像头数量
+    if(root === null){
+        dp[0][0] = 0
+        dp[0][1] = 10000 // 空节点不能放置
+        dp[1][0] = 0
+        dp[1][1] = 10000 // 空节点不能放置
+        return
+    }
+    //叶子节点
+    if(root.left === null && root.right === null){
+        dp[0][0] = 10000 // 不可能
+        dp[0][1] = 1
+        dp[1][0] = 0
+        dp[1][1] = 1
+        return
+    }
+    const l = [[],[]]
+    const r = [[],[]]
+    getDp(root.left, l)
+    getDp(root.right, r)
+
+    dp[0][0] = Math.min(l[0][1] + r[0][0],l[0][0] + r[0][1], l[0][1] + r[0][1])
+    dp[1][0] = Math.min(dp[0][0], l[0][0] + r[0][0]) // 子树共四种情况（左放右不放，左不放右放，左不放右不放，左放右放）
+    dp[0][1] = Math.min(l[1][0] + r[1][0], l[1][0] + r[1][1], l[1][1] + r[1][0], l[1][1] + r[1][1]) + 1 // 子树共四种情况（左放右不放，左不放右放，左不放右不放，左放右放）
+    dp[1][1] = dp[0][1] // 子树共四种情况（左放右不放，左不放右放，左不放右不放，左放右放）
+}
+
+// 假设dp[0][0]代表父节点不放置，当前节点也不放置摄像头
+// 那么他的左子树，右子树至少有一个需要放置摄像头，l[0][1]+ r[0][0] 或者l[0][0] + r[0][1]或者l[0][1] + r[0][1]
+function minCameraCover(root: TreeNode | null): number {
+    const dp = [[],[]]
+    getDp(root,dp)
+    return Math.min(dp[0][1],dp[0][0])
+};
+```
