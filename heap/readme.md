@@ -61,7 +61,63 @@
     2. 插入元素时和小顶堆 堆顶元素比较，如果大于小顶堆堆顶，插入小顶堆（右边），反之插入大顶堆（左边）
     3. 通过比较两个堆长度，如果前面多与后面两个，往后面塞,如果后面多与前面两个，往前面塞，分别处理的都是顶堆元素
 264. 丑数 II
-    1. 同第17.09. 第k个数类似，新的丑数都是基于已有的丑数来计算的，搞三个指针，初始都指向为1，在已有丑数（初始为1）里面找出一个最小值分别*2，*3，*5得出新的一系列丑数，然后移动最小值对应的指针。
+    1. 同第17.09. 第k个数类似，新的丑数都是基于已有的丑数来计算的，搞三个指针，初始都指向为0，在已有丑数（初始为1）里面找出一个最小值分别*2，*3，*5得出新的一系列丑数，然后将最小值放入丑数数组，并移动最小值对应的指针+1。
+    2. 小顶堆。最小值就在最顶端，这个最小值乘以大于等于它的最大素因子，如最大素因子为5 ，则可以乘5；如最大素因子为3 ，则可以乘3,5；如最大素因子为2 ，则可以乘2,3,5，然后将结果放入堆中。
+
+313. 超级丑数
+
+```js
+function nthSuperUglyNumber(n: number, primes: number[]): number {
+    const pins:number[] = []
+    const ans = [1]
+
+    while(ans.length < n){
+        let min
+        for(let i = 0;i < primes.length;i++){ // 计算最小值
+            pins[i] = pins[i] || 0
+            let val = ans[pins[i]] * (primes[i])
+            min = min > val ? val : min ?? val;
+        }
+
+       for(let i = 0;i < primes.length;i++){ // 移动最小值对应的指针+1的位置，也就是这次的min位置，作为下一次的丑数基础。
+            let val = ans[pins[i]] *(primes[i])
+            if(min === val){
+                pins[i]++
+            }
+        }
+        ans.push(min)
+    }
+    return ans[n - 1]
+}; 
+```
+
+1753. 移除石子的最大得分
+
+- 将所有石子尽可能都清空，即为最大得分。
+```js
+function maximumScore(a: number, b: number, c: number): number {
+    const d = [a,b,c]
+    d.sort((a,b)=>a-b);
+    [a,b,c] = d;
+    let ans = 0
+    // 排好序的a<=b<=c
+    // step1. 用a 的一部分尽量去消掉b和c的差值
+    let cnt1 = Math.min(c-b,a)
+    a-= cnt1
+    c-= cnt1
+    ans = cnt1
+
+    // step2. 如果a大于0，则b = c,反之b<=c
+    if(a > 0){
+        if(a % 2 !== 0) a-- // a偶数化
+        ans = ans + a + (b - a / 2) //a清除完用a次。剩余的b为b - a / 2次
+    } else {
+        ans += b
+    }
+    return ans
+};
+
+```
 
 
 ### 进阶面试题
