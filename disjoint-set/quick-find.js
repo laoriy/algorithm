@@ -19,7 +19,7 @@ class QuickFind {
         const cb = this.color[b]
         // 将b的颜色赋值给a
         for(let i = 0 ;i < this.size;i++){
-           if(this.color[i] = cb) this.color[i] = this.color[a] 
+           if(this.color[i] === cb) this.color[i] = this.color[a] 
         }
     }
 }
