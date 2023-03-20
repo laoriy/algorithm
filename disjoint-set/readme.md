@@ -82,6 +82,34 @@ function numIslands(grid: string[][]): number {
     return ans
 };
 ```
+990. [等式方程的可满足性](https://leetcode.cn/problems/satisfiability-of-equality-equations/)
+```ts
+function equationsPossible(equations: string[]): boolean {
+    // 看各个条件有冲突
+    // 相等元素具有连通性，将相等的元素放在一个集合中，如果不等的关系两边都在这个集合中，则冲突
+
+    // 1. 利用相等关系创建并查集，有26个编号
+    let u = new UnionSet(26)
+    let uneQueal = []
+    for(let i=0;i<equations.length;i++){
+        let s =  equations[i]
+        let aCode = getCode('a') // a换算成数字
+        let leftV = getCode(s[0]) - aCode // a换算成0
+        let rightV = getCode(s[3]) - aCode
+        let symbol = s.slice(1,3)
+        if(symbol === '=='){
+            u.merge(leftV,rightV)
+        } else {
+            uneQueal.push([leftV,rightV])
+        }
+    }
+    for(let i=0;i<uneQueal.length;i++){
+        let [leftV,rightV] = uneQueal[i]
+        if(u.get(leftV) === u.get(rightV)) return false  // 位于同一个并查集
+    }
+    return true
+};
+```
 ### 
 
 
