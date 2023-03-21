@@ -110,6 +110,23 @@ function equationsPossible(equations: string[]): boolean {
     return true
 };
 ```
+684. [冗余连接](https://leetcode.cn/problems/redundant-connection/)
+```ts
+function findRedundantConnection(edges: number[][]): number[] {
+    // 多的边原本就是连通的，去掉不影响连通性
+    let u = new UnionSet(edges.length)
+    let ans = []
+    for(let i =0;i< edges.length;i++){
+        let [point1,point2] = edges[i]
+        if(u.get(point1) === u.get(point2)){
+            ans = edges[i]
+        } else {
+            u.merge(point1,point2)
+        }
+    }
+    return  ans
+}
+```
 ### 
 
 
