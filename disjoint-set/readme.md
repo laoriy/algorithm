@@ -185,5 +185,24 @@ function makeConnected(n: number, connections: number[][]): number {
   return ans;
 }
 ```
+128. [最长连续序列](https://leetcode.cn/problems/longest-consecutive-sequence/description/)
+```js
+function longestConsecutive(nums: number[]): number {
+    let numss = new Set(nums.sort((a,b)=>a-b))
+    let maxCount = 0
+    for(let value of numss){
+        let max = 1
+        let cur = value
+        while(numss.has(cur + 1)){
+            numss.delete(cur + 1)
+            max++
+            cur++
+        }
+        maxCount = Math.max(maxCount,max)
+    }
+    return maxCount
+};
 
+
+```
 ###
