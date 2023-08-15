@@ -244,3 +244,35 @@ function decodeString(s: string): string {
   return result;
 }
 ```
+
+11. 盛最多水的容器,[题解](https://leetcode.cn/problems/container-with-most-water/solutions/94102/on-shuang-zhi-zhen-jie-fa-li-jie-zheng-que-xing-tu/)
+
+```js
+function maxArea(height: number[]): number {
+  let l = 0;
+  let r = height.length - 1;
+  let ans = 0;
+  while (l < r) {
+    ans = Math.max(ans, Math.min(height[l], height[r]) * (r - l));
+    if (height[l] < height[r]) l++;
+    else r--;
+  }
+  return ans;
+}
+```
+
+470. 用 Rand7() 实现 Rand10()
+
+```js
+function rand10(): number {
+  let row, col, idx;
+  do {
+    row = rand7();
+    col = rand7();
+    idx = col + (row - 1) * 7;
+  } while (idx > 40);
+
+  // return 1 + (idx - 1) % 10; // 0-39 :0-9,10-19,20-29,30-39 分别得出都是0-9
+  return 10 - (idx % 10); // 0-40 分别得出1-9,0，最终是9,8,7,...10
+}
+```
