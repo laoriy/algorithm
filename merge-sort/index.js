@@ -26,7 +26,8 @@ function mergeSort(arr, l = 0, r = arr.length - 1) {
     if (p1 <= mid) temp.push(...arr.slice(p1, mid + 1)) // 左边还有
     if (p2 <= r) temp.push(...arr.slice(p2, r + 1)) // 右边还有
 
-    for (let i = l; i <= r; i++) arr[i] = temp[i - l] // 拷贝回原来的数组中
+    // for (let i = l; i <= r; i++) arr[i] = temp[i - l] // 拷贝回原来的数组中
+    for (let i = 0; i < temp.length; i++) arr[l + i] = temp[i]; // 拷贝回原来的数组中
 }
 
 
@@ -53,3 +54,8 @@ const arr2 = [2, 1, 3, 6, 9, 8, 4, 19, 10, 50, 0]
 mergeSort(arr)
 console.log(arr);
 console.log(mergeSortJs(arr2));
+
+
+
+
+

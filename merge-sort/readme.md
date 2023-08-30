@@ -12,3 +12,10 @@
 ![image](./images/demo.webp)
 - 代码实现
     见[index.js](index.js)
+
+# 经典面试题-归并排序基础
+
+- 剑指 Offer 51. 数组中的逆序对：主要还是利用归并的思想，代码见[reversePairs.js](reversePairs.js)
+- 23. 合并 K 个升序链表，分治思想，代码见[mergeKLists.ts](mergeKLists.ts)
+
+ 
