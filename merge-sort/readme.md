@@ -17,5 +17,10 @@
 
 - 剑指 Offer 51. 数组中的逆序对：主要还是利用归并的思想，代码见[reversePairs.js](reversePairs.js)
 - 23. 合并 K 个升序链表，分治思想，代码见[mergeKLists.ts](mergeKLists.ts)
+- 148. 排序链表[sortList.ts](sortList.ts)
+- 1305. 两棵二叉搜索树中的所有元素:先中序遍历为有序的，然后合并即可
+- 327. 区间和的个数；
+    - 原序列区间和值等于前缀和数组上两项相减的结果--->前缀和数组`sum`中有多少对满足`sum[j] - sum[i] <= upper 且  i < j`
+
 
  
