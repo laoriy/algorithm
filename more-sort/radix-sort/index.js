@@ -2,20 +2,50 @@
  * 基数排序LSD
  * @param {Number} arr 
  */
-function radixSort(arr) {
-    const count = Array.from({ length: 10 }, () => []) // 0-9的存储
-    const max = Math.max(...arr).toString().length
-    let m = 1 // 个位排序 
-    while (m <= max) {
-        for (let v of arr) {
-            let digit = Math.floor((v % (10 ** m)) / 10 ** (m - 1)) // 对应位的数字
-            count[digit].push(v)
-        }
-        let ind = 0;
-        for (let v of count) while (v.length) arr[ind++] = v.shift()
-        m++
+// function radixSort(arr) {
+//     const count = Array.from({ length: 10 }, () => []) // 0-9的存储
+//     const max = Math.max(...arr).toString().length
+//     let m = 1 // 个位排序 
+//     while (m <= max) {
+//         for (let v of arr) {
+//             let digit = Math.floor((v % (10 ** m)) / 10 ** (m - 1)) // 对应位的数字
+//             count[digit].push(v)
+//         }
+//         let ind = 0;
+//         for (let v of count) while (v.length) arr[ind++] = v.shift()
+//         m++
+//     }
+// }
+/**这才是八二正经的基数排序 */
+var radixSort = function(nums) {
+    const n = nums.length;
+    if (n < 2) {
+        return 0;
     }
-}
+    let exp = 1;
+    const buf = new Array(n).fill(0);   
+    const maxVal = Math.max(...nums);
+
+    while (maxVal >= exp) {
+        const cnt = new Array(10).fill(0);
+        for (let i = 0; i < n; i++) {
+            let digit = Math.floor(nums[i] / exp) % 10;
+            cnt[digit]++;
+        }
+        for (let i = 1; i < 10; i++) { // 求尾坐标
+            cnt[i] += cnt[i - 1];
+        }
+        for (let i = n - 1; i >= 0; i--) {
+            let digit = Math.floor(nums[i] / exp) % 10;
+            buf[cnt[digit] - 1] = nums[i];
+            cnt[digit]--;
+        }
+        nums.splice(0, n, ...buf);
+        exp *= 10;
+    }
+    
+};
+
 
 
 /**

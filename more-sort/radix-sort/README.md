@@ -2,15 +2,15 @@
 
 - LSD（Least Significant Digit）：
 
-    全称：Least Significant Digit
+  全称：Least Significant Digit
 
-    含义：LSD 是一种基数排序算法中的排序方法，它从数字或字符串的最低有效位（最不重要的位）开始进行排序。LSD 按照最低有效位的值将数据分配到不同的桶中，然后再依次对更高位进行排序，直到最高有效位。LSD 排序适用于固定长度的数字或字符串。
+  含义：LSD 是一种基数排序算法中的排序方法，它从数字或字符串的最低有效位（最不重要的位）开始进行排序。LSD 按照最低有效位的值将数据分配到不同的桶中，然后再依次对更高位进行排序，直到最高有效位。LSD 排序适用于固定长度的数字或字符串。
 
 - MSD（Most Significant Digit）：
 
-    全称：Most Significant Digit
+  全称：Most Significant Digit
 
-    含义：MSD 是一种基数排序算法中的排序方法，与 LSD 相反，它从数字或字符串的最高有效位（最重要的位）开始进行排序。MSD 将数据根据最高有效位的值分配到不同的桶中，然后再递归地对每个桶中的数据进行排序，直到达到最低有效位。MSD 排序适用于可变长度的数字或字符串。
+  含义：MSD 是一种基数排序算法中的排序方法，与 LSD 相反，它从数字或字符串的最高有效位（最重要的位）开始进行排序。MSD 将数据根据最高有效位的值分配到不同的桶中，然后再递归地对每个桶中的数据进行排序，直到达到最低有效位。MSD 排序适用于可变长度的数字或字符串。
 
 ## 特点
 
@@ -28,3 +28,33 @@
 -> 个位归位： 21 11 31 21 | 32 22 | 13 ，完成个位排序
 -> 十位技术: 2 个 1 | 3 个 2 | 2 个 3 --> 区域前缀和（尾坐标）为 2 | 5 | 7 十位为 1 的尾坐标是 2，十位为 2 的尾坐标是 5，十位为 3 的尾坐标是 7
 -> 十位归位： 11 13 | 21 21 22 | 31 32 ，完成十位排序
+
+## 题目
+
+1288. 删除被覆盖区间
+
+```ts
+function removeCoveredIntervals(intervals: number[][]): number {
+  // [x, y]按照x升序 y降序排列
+  intervals.sort((a, b) => {
+    if (a[0] === b[0]) {
+      return b[1] - a[1];
+    }
+    return a[0] - b[0];
+  });
+
+  let i = 0,
+    len = intervals.length,
+    cut = 0;
+  while (i < len) {
+    let [m, n] = intervals[i],
+      j = i + 1;
+    while (j < len && intervals[j][0] >= m && intervals[j][1] <= n) {
+      cut++;
+      j++;
+    }
+    i = j;
+  }
+  return len - cut;
+}
+```
