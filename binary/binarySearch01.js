@@ -1,7 +1,7 @@
 /**
  * 
  * @param {Array<number>} arr 数组
- * @param {number} x 要查找大于等于x的值
+ * @param {number} x 要查找第一个大于等于x的值
  * @returns 
  */
 function binarySearch01(arr,x){
@@ -19,4 +19,5 @@ function binarySearch01(arr,x){
 
 const arr = [5,7,9,9,9,10,10,11,15,20]
 
-console.log(binarySearch01(arr,10)); // 第一个大于等于10的位置在5
+console.log(binarySearch01(arr,10)); // 第一个大于等于10的位置在5-->10
+console.log(binarySearch01(arr,12)); // 第一个大于等于12的位置在8-->15
