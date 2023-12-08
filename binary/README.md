@@ -60,3 +60,5 @@ function searchInsert(nums: number[], target: number): number {
   return nums[l] >= target ? l : l + 1;
 }
 ```
+34. [在排序数组中查找元素的第一个和最后一个位置](./searchRange.js)
+
