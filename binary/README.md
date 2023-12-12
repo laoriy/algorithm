@@ -60,5 +60,38 @@ function searchInsert(nums: number[], target: number): number {
   return nums[l] >= target ? l : l + 1;
 }
 ```
-34. [在排序数组中查找元素的第一个和最后一个位置](./searchRange.js)
 
+34. [在排序数组中查找元素的第一个和最后一个位置](./searchRange.js)
+1. 两数之和
+
+- 套娃式的排序：不对原数组进行排序，通过对下标进行排序
+
+```ts
+function bindarySearch(idxs, nums, val) {
+  let l = 0;
+  let r = idxs.length - 1;
+  while (l <= r) {
+    const mid = Math.floor((l + r) / 2);
+    if (nums[idxs[mid]] === val) return idxs[mid];
+    if (nums[idxs[mid]] > val) r = mid - 1;
+    else l = mid + 1;
+  }
+  return -1;
+}
+
+function twoSum(nums: number[], target: number): number[] {
+  const idxs = []; // 下标数组
+  for (let i = 0; i < nums.length; i++) {
+    idxs[i] = i;
+  }
+  // 对下标数组进行排序
+  idxs.sort((a, b) => nums[a] - nums[b]);
+
+  for (let i = 0; i < idxs.length; i++) {
+    let preVal = nums[idxs[i]]; // 前一个值
+    let afterIdx = bindarySearch(idxs.slice(i + 1), nums, target - preVal); // 寻找后一个值的位置
+    if (afterIdx !== -1) return [idxs[i], afterIdx];
+  }
+  return [];
+}
+```
