@@ -95,3 +95,6 @@ function twoSum(nums: number[], target: number): number[] {
   return [];
 }
 ```
+
+1658. [将 x 减到 0 的最小操作数](./minOperations.js)
+
