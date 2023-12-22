@@ -98,3 +98,10 @@ function twoSum(nums: number[], target: number): number[] {
 
 1658. [将 x 减到 0 的最小操作数](./minOperations.js)
 
+
+475. [供暖器](./findRadius.js)
+
+81. 搜索旋转排序数组 II
+
+
+
