@@ -101,7 +101,30 @@ function twoSum(nums: number[], target: number): number[] {
 
 475. [供暖器](./findRadius.js)
 
-81. 搜索旋转排序数组 II
+81. 搜索旋转排序数组 II --> 类似于
+    33. 搜索旋转排序数组
+```ts
+function search(nums: number[], target: number): boolean {
+    const len = nums.length;
+    if(target === nums[0] || target === nums[len - 1]) return true // 判断一下开头和结尾
+    let l = 0,r = len -1
+    // 将开头和结尾重复的去掉
+    while(nums[l] === nums[0]) l++ 
+    while(nums[r] === nums[len - 1]) r--
 
+    while(l <= r){
+        let mid= Math.floor((l + r) / 2)
+        if(nums[mid] === target) return true
+        if(nums[mid] <= nums[r]){ // 位于第二个有序阶梯
+            if(target <= nums[r] && target > nums[mid]) l = mid + 1
+            else r = mid - 1
+        } else {
+            if(target < nums[mid] && target >= nums[l]) r = mid - 1
+            else l = mid + 1
+        }
 
+    }
+    return false
+};
+```
 
