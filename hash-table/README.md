@@ -13,6 +13,11 @@
     4. 链式地址法（拉链法）：哈希表每个位置存储的是链表的头结点
 
 
-
+## 代码
+参考：
+ - [BKDR hash]( https://blog.csdn.net/qq_40342400/article/details/127232662)
+ 
+实现
+ - [HashTable](./hashTable.js)
 
 ## 布隆过滤器
