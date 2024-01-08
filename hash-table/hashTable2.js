@@ -23,28 +23,20 @@ class HashTable {
 
         return hash & 0x7FFFFFFF; // 取正数，保证返回值为非负整数
     }
-    #reCalcIndex(currentIndex, s) {
-        let probeCount = 0;
-        while (this.buckets[currentIndex] !== undefined && this.buckets[currentIndex] !== s) {
-            currentIndex = (currentIndex + 1) % this.capacity; // 线性探测下一个位置
-            probeCount++;
-        }
-        return currentIndex
-    }
+
     insert(s) {
         let index = this.#hashFunc(s) // 计算哈希值
-        index = this.#reCalcIndex(index, s) //冲突处理 
-        if (this.buckets[index] !== s) {
+        if (!this.buckets[index]) this.buckets[index] = []
+        if (this.buckets[index].indexOf(s) === -1) {
+            this.buckets[index].unshift(s)
             this.size++
-            this.buckets[index] = s
             if (this.size / this.capacity > 0.75) this.expand() // 容量大于0.75 需要扩容了
         }
-
     }
     find(s) {
         let index = this.#hashFunc(s)
-        index = this.#reCalcIndex(index, s)
-        return this.buckets[index] === s
+        if (!this.buckets[index]) return false
+        return this.buckets[index].indexOf(s) !== -1
     }
     /**
      * 扩容
@@ -52,7 +44,7 @@ class HashTable {
     expand() {
         const newSize = this.capacity * 2
         const newHashTable = new HashTable(newSize)
-        this.buckets.forEach(element => {
+        this.buckets.flat().forEach(element => {
             newHashTable.insert(element)
         });
         this.buckets = newHashTable.buckets
@@ -64,15 +56,15 @@ class HashTable {
 // 示例用法
 const hashTable = new HashTable(5);
 hashTable.insert("apple");
-hashTable.insert("banana");
+hashTable.insert("dbanana");
 hashTable.insert("apple");
 hashTable.insert("apple1");
 console.log(hashTable);
-hashTable.insert("apple3");
-hashTable.insert("apple2");
+hashTable.insert("fapple3");
+hashTable.insert("fapple2");
 console.log(hashTable);
 console.log(hashTable.find("apple")); // true
-console.log(hashTable.find("apple3")); // true
-console.log(hashTable.find("apple2")); // true
-console.log(hashTable.find("banana")); // true
+console.log(hashTable.find("fapple3")); // true
+console.log(hashTable.find("fapple2")); // true
+console.log(hashTable.find("dbanana")); // true
 console.log(hashTable.find("orange")); // false

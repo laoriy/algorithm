@@ -18,6 +18,7 @@
  - [BKDR hash]( https://blog.csdn.net/qq_40342400/article/details/127232662)
  
 实现
- - [HashTable](./hashTable.js)
+ - [HashTable开发地址法](./hashTable.js)
+ - [HashTable拉链法](./hashTable2.js)
 
 ## 布隆过滤器
