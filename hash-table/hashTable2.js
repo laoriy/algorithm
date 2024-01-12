@@ -30,7 +30,7 @@ class HashTable {
         if (this.buckets[index].indexOf(s) === -1) {
             this.buckets[index].unshift(s)
             this.size++
-            if (this.size / this.capacity > 0.75) this.expand() // 容量大于0.75 需要扩容了
+            if (this.size > this.capacity * 3) this.expand() // 平均超过3个，就扩容
         }
     }
     find(s) {

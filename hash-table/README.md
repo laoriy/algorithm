@@ -2,23 +2,115 @@
 
 ## 简单介绍
 
-  - 索引数据
-  - 哈希函数：利用数组快速存取数据的特性，将任意数据类型映射到数组的下标
-  - 哈希操作：从高纬空间到低纬空间的映射
-  - 哈希冲突：两个元素可能被映射到同一个位置，永远不要幻想没有哈希冲突，而是出现冲突时要解决哈希冲突
-    1. 开发定址法:下标冲突时，在已有下标基础上进行再计算，去探测到有可能不冲突的新的一个下标位置
-        - 线性探测法
-    2. 再哈希法：设计多个哈希函数，冲突时丢给下一个哈希函数，治标不治本。
-    3. 建立公共溢出区：所以发生冲突的，都放入溢出缓冲区，其可以使用其他算法进行维护
-    4. 链式地址法（拉链法）：哈希表每个位置存储的是链表的头结点
-
+- 索引数据
+- 哈希函数：利用数组快速存取数据的特性，将任意数据类型映射到数组的下标
+- 哈希操作：从高纬空间到低纬空间的映射
+- 哈希冲突：两个元素可能被映射到同一个位置，永远不要幻想没有哈希冲突，而是出现冲突时要解决哈希冲突
+  1. 开发定址法:下标冲突时，在已有下标基础上进行再计算，去探测到有可能不冲突的新的一个下标位置
+     - 线性探测法
+  2. 再哈希法：设计多个哈希函数，冲突时丢给下一个哈希函数，治标不治本。
+  3. 建立公共溢出区：所以发生冲突的，都放入溢出缓冲区，其可以使用其他算法进行维护
+  4. 链式地址法（拉链法）：哈希表每个位置存储的是链表的头结点
 
 ## 代码
-参考：
- - [BKDR hash]( https://blog.csdn.net/qq_40342400/article/details/127232662)
- 
-实现
- - [HashTable开发地址法](./hashTable.js)
- - [HashTable拉链法](./hashTable2.js)
 
-## 布隆过滤器
+参考：
+
+- [BKDR hash](https://blog.csdn.net/qq_40342400/article/details/127232662)
+
+实现
+
+- [HashTable 开发地址法](./hashTable.js)
+- [HashTable 拉链法](./hashTable2.js)
+
+## 布隆过滤器(Bloom Filter)
+
+- 传统哈希表，存储空间与元素数量有关
+- 布隆过滤器，存储空间与元素数量无关
+
+1. [什么是布隆过滤器？如何解决高并发缓存穿透问题？](https://mp.weixin.qq.com/s/WGz7DelyB1yqGjhydTc2QQ)
+2. [5 分钟搞懂布隆过滤器，掌握亿级数据过滤算法](https://mp.weixin.qq.com/s/DeKedpyUZ5iAfCVWJLkfxA)
+
+### 布隆过滤器应用场景
+
+1. 解决缓存穿透
+2. 网页爬虫对 URL 的去重，避免爬取相同的 URL 地址
+3. 反垃圾邮件，从数十亿个垃圾邮件列表中判断某邮箱是否垃圾邮箱
+
+## 题目
+
+705. 设计哈希集合
+
+```ts
+class MyHashSet {
+  #base = 131;
+  data: number[][];
+  constructor() {
+    this.data = new Array(this.#base);
+  }
+
+  add(key: number): void {
+    const hash = this.#hash(key);
+    if (!this.data[hash]) {
+      this.data[hash] = [key];
+    } else if (!this.data[hash].includes(key)) {
+      this.data[hash].unshift(key);
+    }
+  }
+
+  remove(key: number): void {
+    const hash = this.#hash(key);
+    if (!this.data[hash]) return;
+    const index = this.data[hash].indexOf(key);
+    index !== -1 && this.data[hash].splice(index, 1);
+  }
+
+  contains(key: number): boolean {
+    const hash = this.#hash(key);
+    if (!this.data[hash]) return false;
+    return this.data[hash].includes(key);
+  }
+  #hash(key: number) {
+    const index = key % this.#base;
+    return index;
+  }
+}
+```
+
+706. 设计哈希映射
+
+```ts
+class MyHashMap {
+  #base = 131;
+  data: Map<number, number>[];
+  constructor() {
+    this.data = new Array(this.#base);
+  }
+
+  put(key: number, value: number): void {
+    const hash = this.#hash(key);
+    if (!this.data[hash]) this.data[hash] = new Map();
+    this.data[hash].set(key, value);
+  }
+
+  get(key: number): number {
+    const hash = this.#hash(key);
+    if (!this.data[hash]) return -1;
+    return this.data[hash].get(key) ?? -1;
+  }
+
+  remove(key: number): void {
+    const hash = this.#hash(key);
+    if (this.data[hash]) {
+      this.data[hash].delete(key);
+    }
+  }
+
+  #hash(key: number) {
+    const index = key % this.#base;
+    return index;
+  }
+}
+```
+
+- 面试题 16.25. LRU 缓存
