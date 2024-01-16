@@ -114,3 +114,46 @@ class MyHashMap {
 ```
 
 - 面试题 16.25. LRU 缓存
+
+  1. 解法 1：哈希链表 --> O(1)时间复杂度
+     [代码](./HashLink.ts)
+  2. 解法 2：
+
+  ```ts
+  class LRUCache {
+    valueMap: Map<number, number>;
+    keyArr: number[];
+    size: number;
+    capacity: number;
+    constructor(capacity: number) {
+      this.capacity = capacity;
+      this.valueMap = new Map<number, number>();
+      this.keyArr = [];
+      this.size = 0;
+    }
+
+    get(key: number): number {
+      const keyIndex = this.keyArr.indexOf(key);
+      if (keyIndex === -1) return -1;
+      this.keyArr.splice(keyIndex, 1);
+      this.keyArr.push(key);
+      return this.valueMap.get(key);
+    }
+
+    put(key: number, value: number): void {
+      if (this.get(key) !== -1) {
+        this.valueMap.set(key, value);
+        return;
+      }
+      if (this.size === this.capacity) {
+        const key = this.keyArr.shift();
+        this.valueMap.delete(key);
+        this.size -= 1;
+      }
+      this.keyArr.push(key);
+      this.valueMap.set(key, value);
+      this.size += 1;
+      console.log(this.keyArr, this.valueMap);
+    }
+  }
+  ```
