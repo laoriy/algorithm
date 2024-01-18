@@ -175,3 +175,6 @@ function findRepeatedDnaSequences(s: string): string[] {
   return arr;
 }
 ```
+
+318. 最大单词长度乘积
+     [代码](./maxProduct.js)
