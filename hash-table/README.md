@@ -157,3 +157,21 @@ class MyHashMap {
     }
   }
   ```
+
+187. 重复的 DNA 序列
+
+```ts
+function findRepeatedDnaSequences(s: string): string[] {
+  const oMap = new Map();
+
+  for (let i = 0; i <= s.length - 10; i++) {
+    let str = s.substring(i, 10 + i);
+    oMap.set(str, (oMap.get(str) || 0) + 1);
+  }
+  const arr = [];
+  oMap.forEach((v, s) => {
+    if (v >= 2) arr.push(s);
+  });
+  return arr;
+}
+```
