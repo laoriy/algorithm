@@ -178,3 +178,42 @@ function findRepeatedDnaSequences(s: string): string[] {
 
 318. 最大单词长度乘积
      [代码](./maxProduct.js)
+
+240. 搜索二维矩阵 II [代码](./searchMatrix.js)
+     - 杨氏矩阵中，需要注意的右上角和左下角的值；
+     - 如果右上角比目标值大，说明不在最后一列；
+     - 如果左上角比目标值大，说明不在最后一行
+
+430. 扁平化多级双向链表
+```ts
+function flatten(head: Node | null): Node | null {
+    let p = head;
+    const stack = []
+    while(p){
+        const pNext = p.next
+        /**
+         * 如果p.child存在就将 p.child 和 p 进行一个双向关联
+         * 然后将p.child移除
+         * 对p.next 也就是之前的child进行一次扁平化操作
+         */
+
+        if(p.child){ 
+            pNext && stack.push(pNext) // 如果p.next有值，就入栈
+            p.next = p.child
+            p.child.prev = p
+            p.child = null
+            p = flatten(p.next)
+        } else {
+            if(!pNext && stack.length) { 
+                const pre = stack.pop() // 如果p.next没有值，就出栈和p进行双向关联
+                p.next = pre
+                pre.prev = p   
+                p = null
+            } else {
+                p = pNext
+            }
+        }
+    }
+    return head
+};
+```
