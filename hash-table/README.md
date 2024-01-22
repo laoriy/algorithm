@@ -217,3 +217,27 @@ function flatten(head: Node | null): Node | null {
     return head
 };
 ```
+
+979. 在二叉树中分配硬币
+    硬币流动都是单向的，统计每个子树的节点数量 和 硬币数量 进行比较 ，得出该子树顶部边上的硬币流动次数
+
+```ts
+function distributeCoins(root: TreeNode | null): number {
+    let ans = 0
+
+    function dfs(node){
+        if(node === null) return [0, 0]
+        let [leftCoins,leftNodes] = dfs(node.left)
+        let [rightCoins,rightNodes] = dfs(node.right)
+
+        const coins = leftCoins + rightCoins + node.val
+        const nodes = leftNodes + rightNodes + 1
+        ans += Math.abs(coins - nodes)
+        return [coins,nodes]
+
+    }
+    dfs(root)
+    return ans
+};
+
+```
