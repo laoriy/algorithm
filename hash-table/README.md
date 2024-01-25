@@ -241,3 +241,48 @@ function distributeCoins(root: TreeNode | null): number {
 };
 
 ```
+
+863. 二叉树中所有距离为 K 的结点
+
+```ts
+function distanceK(root: TreeNode | null, target: TreeNode | null, k: number): number[] {
+    const ans = []
+
+    function dfs(_root, d, _k) {
+        if (_k < 0) return
+        if (_root === null) return
+        if (d === _k) {
+            ans.push(_root.val)
+        }
+        dfs(_root.left, d + 1, _k)
+        dfs(_root.right, d + 1, _k)
+    }
+    // 用于回溯过程
+    let p = k
+    function getResult(_root, _target, _k) {
+        if (_root === null) return false
+        if (_root === _target) { // 往下寻找
+            dfs(_root, 0, _k)
+            return true
+        }
+        // 往上回溯，在相反的分支上进行寻找
+        if (getResult(_root.left, _target, _k)) {
+            p -= 1
+            if (p === 0) ans.push(_root.val)
+            dfs(_root.right, 0, p - 1)
+            return true
+        } else if (getResult(_root.right, _target, _k)) {
+            p -= 1
+            if (p === 0) ans.push(_root.val)
+            dfs(_root.left, 0, p - 1)
+            return true
+        }
+        return false
+
+    }
+
+    getResult(root, target, k)
+
+    return ans
+};
+```
