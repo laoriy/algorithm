@@ -29,7 +29,7 @@ function digit(n) {
 }
 
 function wardrobeFinishing(m, n, cnt) {
-    const res = new Array(m).fill(null).map(() => new Array(n).fill(-1))
+    const res = new Set()
     const queue = [[0, 0]]
     let ans = 1
     const directions = [[1, 0], [0, 1]]
@@ -41,8 +41,8 @@ function wardrobeFinishing(m, n, cnt) {
             const newI = i + dirI;
             const newJ = j + dirJ;
 
-            if (newI >= m || newJ >= n || res[newI][newJ] !== -1 || digit(newI) + digit(newJ) > cnt) continue;
-            res[newI][newJ] += 1
+            if (newI >= m || newJ >= n || res.has(`${newI}_${newJ}`) || digit(newI) + digit(newJ) > cnt) continue;
+            res.add(`${newI}_${newJ}`)
             ans += 1
             queue.push([newI, newJ])
         }
@@ -52,5 +52,7 @@ function wardrobeFinishing(m, n, cnt) {
 };
 
 console.log(
-    wardrobeFinishing(4, 7, 5)
+    // wardrobeFinishing(4, 7, 5),
+    wardrobeFinishing(38, 15, 9)
+
 )
