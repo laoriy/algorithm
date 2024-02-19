@@ -16,6 +16,7 @@
 通常以递归的方式实现
 
 - 130. 被围绕的区域，[代码](./dfs/solve.js)
+- 494. 目标和，[代码](./dfs/findTargetSumWays.js): 注意使用map 缓存 部分计算结果，提高效率
 
 ## BFS（Breadth First Search）广度优先遍历
 
