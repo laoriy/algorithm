@@ -16,7 +16,10 @@
 通常以递归的方式实现
 
 - 130. 被围绕的区域，[代码](./dfs/solve.js)
-- 494. 目标和，[代码](./dfs/findTargetSumWays.js): 注意使用map 缓存 部分计算结果，提高效率
+- 494. 目标和，[代码](./dfs/findTargetSumWays.js): 注意使用 map 缓存 部分计算结果，提高效率
+- 473. 火柴拼正方形，[代码](./dfs/makesquare.js): 从大到小依次放入四个桶中，
+- 39. 组合总和，[代码](./dfs/combinationSum.js): 
+![images](./images/combinationSum.png)
 
 ## BFS（Breadth First Search）广度优先遍历
 
