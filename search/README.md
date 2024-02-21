@@ -18,8 +18,15 @@
 - 130. 被围绕的区域，[代码](./dfs/solve.js)
 - 494. 目标和，[代码](./dfs/findTargetSumWays.js): 注意使用 map 缓存 部分计算结果，提高效率
 - 473. 火柴拼正方形，[代码](./dfs/makesquare.js): 从大到小依次放入四个桶中，
-- 39. 组合总和，[代码](./dfs/combinationSum.js): 
-![images](./images/combinationSum.png)
+- 39. 组合总和，[代码](./dfs/combinationSum.js):
+      ![images](./images/combinationSum.png)
+- 51. N 皇后，[代码](./dfs/makesquare.js)：
+
+      利用回溯的套路，从第一行进行放置皇后：
+
+      - 遍历枚举出所有可能的选择。
+      - 依次尝试这些选择：作出一种选择，并往下递归。
+      - 如果这个选择产生不出正确的解，要撤销这个选择（将当前的 "Q" 恢复为 "."），回到之前的状态，并作出下一个可用的选择。
 
 ## BFS（Breadth First Search）广度优先遍历
 
