@@ -27,3 +27,26 @@
 
 - 862. [和至少为 K 的最短子数组](./shortestSubarray.js)
        根据前缀和 数组 维护当前值及以前的单调递增的单调队列，依次判断当前值和单调队列中的每个值之间的差值，取最小值
+
+## 温故知新
+
+- 513. 找树左下角的值
+
+简单的深度遍历，每一层最左边的值记录起来，最后一个即为目标值
+
+```js
+function findBottomLeftValue(root) {
+  let result = [];
+  function dfs(_root, level) {
+    if (!_root) return;
+    if (result[level] == null) result[level] = _root.val; // 这一层已经有一个值了
+
+    dfs(_root.left, level + 1);
+    dfs(_root.right, level + 1);
+  }
+
+  dfs(root, 0);
+
+  return result.pop();
+}
+```
