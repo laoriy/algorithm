@@ -30,23 +30,7 @@
 
 ## 温故知新
 
-- 513. 找树左下角的值
-
-简单的深度遍历，每一层最左边的值记录起来，最后一个即为目标值
-
-```js
-function findBottomLeftValue(root) {
-  let result = [];
-  function dfs(_root, level) {
-    if (!_root) return;
-    if (result[level] == null) result[level] = _root.val; // 这一层已经有一个值了
-
-    dfs(_root.left, level + 1);
-    dfs(_root.right, level + 1);
-  }
-
-  dfs(root, 0);
-
-  return result.pop();
-}
-```
+- 513. [找树左下角的值](./review-old.js)
+       简单的深度遍历，每一层最左边的值记录起来，最后一个即为目标值
+- 135. [分发糖果](./review-old.js)
+       从两边分别遍历一次得出满足各自条件的糖果数，然后取每个位置的最大值即可
