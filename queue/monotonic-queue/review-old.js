@@ -81,5 +81,86 @@ function candy(ratings) {
 
 console.log(
     candy([1, 0, 2]),
-    candy([1,2,2]),
+    candy([1, 2, 2]),
+)
+/* 有两个水壶，容量分别为 x 和 y 升。水的供应是无限的。确定是否有可能使用这两个壶准确得到 target 升。
+
+你可以：
+
+装满任意一个水壶
+清空任意一个水壶
+将水从一个水壶倒入另一个水壶，直到接水壶已满，或倒水壶已空。
+ 
+
+示例 1: 
+
+输入: x = 3,y = 5,target = 4
+输出: true
+解释：
+按照以下步骤操作，以达到总共 4 升水：
+1. 装满 5 升的水壶(0, 5)。
+2. 把 5 升的水壶倒进 3 升的水壶，留下 2 升(3, 2)。
+3. 倒空 3 升的水壶(0, 2)。
+4. 把 2 升水从 5 升的水壶转移到 3 升的水壶(2, 0)。
+5. 再次加满 5 升的水壶(2, 5)。
+6. 从 5 升的水壶向 3 升的水壶倒水直到 3 升的水壶倒满。5 升的水壶里留下了 4 升水(3, 4)。
+7. 倒空 3 升的水壶。现在，5 升的水壶里正好有 4 升水(0, 4)。
+参考：来自著名的 "Die Hard"
+示例 2:
+
+输入: x = 2, y = 6, target = 5
+输出: false
+示例 3:
+
+输入: x = 1, y = 2, target = 3
+输出: true
+解释：同时倒满两个水壶。现在两个水壶中水的总量等于 3。 */
+
+
+function canMeasureWater(x, y, target) {
+
+    const queue = [[0, 0]]
+
+    const memo = new Set()
+
+    const getHash = ([left, right]) => {
+        return left + '.' + right
+    }
+
+
+    function bfs([left, right], queue) {
+        //case1 : 左边的壶倒入右边的壶中，直直右边的倒满或者左边倒空
+        const tryCleanLeft = Math.min(left, y - right)
+        queue.push([left - tryCleanLeft, right + tryCleanLeft])
+        //case2：右边的壶倒入左边的壶中，直直左边的倒满或者右边倒空
+        const tryCleanRight = Math.min(x - left, right)
+        queue.push([left + tryCleanRight, right - tryCleanRight])
+        // case3:左边倒满
+        queue.push([x, right])
+        // case4:右边倒满
+        queue.push([left, y])
+        // case5:左边倒空
+        queue.push([0, right])
+        // case6:右边倒空
+        queue.push([left, 0])
+    }
+
+    while (queue.length > 0) {
+        const first = queue.shift()
+
+        if (memo.has(getHash(first))) continue
+        memo.add(getHash(first))
+        const [left, right] = first
+
+        if (left === target || right === target || left + right === target) return true
+        bfs(first, queue)
+    }
+
+    return false
+};
+
+console.log(
+    canMeasureWater(3, 5, 4),
+    canMeasureWater(2, 6, 5),
+    canMeasureWater(1, 2, 3),
 )
