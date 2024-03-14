@@ -331,3 +331,58 @@ console.log(
     restoreIpAddresses('0000'),
     restoreIpAddresses('25525511135'),
 )
+
+
+/**
+ * 46. 全排列
+
+给定一个不含重复数字的数组 nums ，返回其 所有可能的全排列 。你可以 按任意顺序 返回答案。
+
+ 
+
+示例 1：
+
+输入：nums = [1,2,3]
+输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+示例 2：
+
+输入：nums = [0,1]
+输出：[[0,1],[1,0]]
+示例 3：
+
+输入：nums = [1]
+输出：[[1]]
+ */
+
+/**
+ * Generate all possible permutations of an array of numbers.
+ *
+ * @param {number[]} nums - The array of numbers to permute
+ * @return {number[][]} An array of all possible permutations
+ */
+function permute(nums) {
+    const result = []
+    const usedMap = new Map()
+    function dfs(path) {
+        if (path.length === nums.length) {
+            result.push(path.slice())
+            return
+        }
+
+        for (let i = 0; i < nums.length; i++) {
+            if (usedMap.has(nums[i])) continue;
+            path.push(nums[i])
+            usedMap.set(nums[i], true)
+            dfs(path)
+            path.pop()
+            usedMap.delete(nums[i])
+        }
+
+    }
+    dfs([])
+    return result;
+};
+
+console.log(
+    permute([1,2,3])
+)
