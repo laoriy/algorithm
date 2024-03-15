@@ -384,5 +384,67 @@ function permute(nums) {
 };
 
 console.log(
-    permute([1,2,3])
+    permute([1, 2, 3])
+)
+/**
+ * 43. 字符串相乘
+ * 给定两个以字符串形式表示的非负整数 num1 和 num2，返回 num1 和 num2 的乘积，它们的乘积也表示为字符串形式。
+
+注意：不能使用任何内置的 BigInteger 库或直接将输入转换为整数。
+
+示例 1:
+
+输入: num1 = "2", num2 = "3"
+输出: "6"
+示例 2:
+
+输入: num1 = "123", num2 = "456"
+输出: "56088"
+ *
+ * @param {string} num1 - the first number to multiply
+ * @param {string} num2 - the second number to multiply
+ * @return {string} the result of multiplying num1 and num2
+ */
+function multiply(num1, num2) {
+    if (num1 === '0' || num2 === '0') return '0'
+    let arr1 = num1.split('')
+    let arr2 = num2.split('')
+    let result = ''
+    let n1 = arr1.length, n2 = arr2.length;
+
+    for (let i = n1 - 1; i >= 0; i--) {
+        let add = 0 // 这是进位
+        let res = '0'.repeat(n1 - i - 1) // 存放每一位计算后对应的值的字符串，记得补零
+        for (let j = n2 - 1; j >= 0; j--) {
+            let p = (arr2[j] * arr1[i]) + add
+            res = `${p % 10}` + res
+            add = Math.floor(p / 10)
+        }
+        if (add) res = add + res
+        console.log(res);
+        result = stringAdd(result, res)
+    }
+
+    return result
+};
+
+function stringAdd(str1, str2) {
+    let maxLen = Math.max(str1.length, str2.length)
+    str1 = str1.padStart(maxLen,'0')
+    str2 = str2.padStart(maxLen,'0')
+    let result = '', add = 0;
+    for (let i = maxLen - 1; i >= 0; i--) {
+        let sum = (+str1[i] || 0) + (+str2[i] || 0) + add
+        result = `${sum % 10}` + result
+        add = Math.floor(sum / 10)
+    }
+    if (add) result = add + result
+    return result
+}
+
+console.log(
+    multiply('123', '456'),
+    multiply('2', '6'),
+    multiply('98', '9'),
+
 )
