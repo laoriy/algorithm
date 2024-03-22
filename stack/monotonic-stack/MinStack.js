@@ -42,12 +42,18 @@ class MinStack {
 
     push(val) {
         this.arr.push(val)
-        this.minStack.push(Math.min(this.minStack[this.minStack.length - 1] ?? Infinity, val))
+        // this.minStack.push(Math.min(this.minStack[this.minStack.length - 1] ?? Infinity, val))
+       if(this.minStack.length === 0 || val <= this.minStack[this.minStack.length - 1]){
+            this.minStack.push(val)
+       }
     }
 
     pop() {
         this.arr.pop()
-        this.minStack.pop()
+        // this.minStack.pop()
+        if(v === this.minStack[this.minStack.length - 1]){
+            this.minStack.pop()
+        }
     }
 
     top() {
