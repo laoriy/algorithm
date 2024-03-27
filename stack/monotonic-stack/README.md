@@ -10,3 +10,5 @@
 - 155. [最小栈](./MinStack.js)
 - 503. [下一个更大元素 II](./nextGreaterElements.js)
 - 901. [股票价格跨度](./StockSpanner.js)
+- 739. [每日温度](./dailyTemperatures.js)
+- 84. [柱状图中最大的矩形](./largestRectangleArea.js)
