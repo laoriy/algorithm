@@ -12,3 +12,9 @@
 - 901. [股票价格跨度](./StockSpanner.js)
 - 739. [每日温度](./dailyTemperatures.js)
 - 84. [柱状图中最大的矩形](./largestRectangleArea.js)
+- 1856. [子数组最小乘积的最大值](./maxSumMinProduct.js)
+        注意 js 中要 bigint
+        求一次前缀和能节省效率
+- 907. [子数组的最小值之和](./sumSubarrayMins.js)
+
+  和上提类似，根据前后最小值的位置确定以当前值为最小值时的子数组个数

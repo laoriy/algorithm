@@ -14,14 +14,14 @@ function largestRectangleArea(heights) {
     const nextQueue = new Array(heights.length).fill(heights.length) // 后面第一个比自己小的元素下标
     const preQueue = new Array(heights.length).fill(-1) // 前面第一个比自己小的元素下标
     let ans = 0
-    let queue = [] // 单调递增栈
+    let stack = [] // 单调递增栈
     for (let i = 0; i < heights.length; i++) {
-        while (queue.length && heights[queue[queue.length - 1]] > heights[i]) {
-            let top = queue.pop()
+        while (stack.length && heights[stack[stack.length - 1]] > heights[i]) {
+            let top = stack.pop()
             nextQueue[top] = i
         }
-        if (queue.length) preQueue[i] = queue[queue.length - 1]
-        queue.push(i)
+        if (stack.length) preQueue[i] = stack[stack.length - 1]
+        stack.push(i)
     }
 
     for (let index = 0; index < heights.length; index++) {
