@@ -39,6 +39,8 @@
  */
 function maxSumMinProduct(nums) {
     // 遍历每一个值 找出这个值的左边界和右边界，左边界为前面不比自己小的个数，右边界为后面不比自己小的个数，这样边界越大的计算乘积肯定越大
+
+    // 找出以自己为最小值的最大边界
     const l = new Array(nums.length).fill(-1)
     const r = new Array(nums.length).fill(nums.length)
     const prefixSum = new Array(nums.length+1).fill(0)
