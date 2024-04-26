@@ -19,10 +19,38 @@
 
 
 /**
+ * 题解
+ * 找出每一个不符合条件（字符出现字数小于k）的字符的分割点，然后再在每个分割点内进行递归求解，
+ */
+
+/**
  * @param {string} s
  * @param {number} k
  * @return {number}
  */
 var longestSubstring = function (s, k) {
 
+    const countMap = new Map()
+    for (let i = 0; i < s.length; i++) {
+        countMap.set(s[i], (countMap.get(s[i]) ?? 0) + 1)
+    }
+    const splitIndexArr = [] // 分割点位置
+    for (let i = 0; i < s.length; i++) {
+        if (countMap.get(s[i]) < k) splitIndexArr.push(i)
+    }
+    splitIndexArr.push(s.length)
+
+    if (splitIndexArr.length === 1) return s.length
+    let pre = 0, max = 0
+    for (let i of splitIndexArr) {
+        let len = i - pre
+        if (len >= k) max = Math.max(max, longestSubstring(s.substr(pre, len), k))
+        pre = i + 1
+    }
+    return max
 };
+
+console.log(
+    longestSubstring('aaabb', 3),
+    longestSubstring('ababbc', 2),
+);

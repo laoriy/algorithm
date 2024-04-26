@@ -51,7 +51,7 @@ var pathSum2 = function (root, targetSum) {
 
         curr += root.val
 
-        ret = prefixSumMap.get(curr - targetSum) || 0 // 从根结点到当前节点之前  有个前缀和为 curr - targetSum 那么从该节点到
+        ret = prefixSumMap.get(curr - targetSum) || 0 // 从根结点到当前节点之前  有个前缀和为 curr(当前节点前缀和) - targetSum 的 节点， 那么从该节点到当前节点和一定为targetSum
         prefixSumMap.set(curr, (prefixSumMap.get(curr) || 0) + 1);
         ret += dfs(root.left, curr, targetSum);
         ret += dfs(root.right, curr, targetSum);
@@ -61,26 +61,3 @@ var pathSum2 = function (root, targetSum) {
 
     return dfs(root, 0)
 };
-
-// var pathSum = function (root, targetSum) {
-//     const prefix = new Map();
-//     prefix.set(0, 1);
-//     return dfs(root, prefix, 0, targetSum);
-// }
-
-// const dfs = (root, prefix, curr, targetSum) => {
-//     if (root == null) {
-//         return 0;
-//     }
-
-//     let ret = 0;
-//     curr += root.val;
-
-//     ret = prefix.get(curr - targetSum) || 0;
-//     prefix.set(curr, (prefix.get(curr) || 0) + 1);
-//     ret += dfs(root.left, prefix, curr, targetSum);
-//     ret += dfs(root.right, prefix, curr, targetSum);
-//     prefix.set(curr, (prefix.get(curr) || 0) - 1);
-
-//     return ret;
-// }
