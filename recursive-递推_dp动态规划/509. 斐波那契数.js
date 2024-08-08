@@ -36,3 +36,16 @@ var fib = function (n) {
     }
     return f[n]
 };
+
+
+var fib = function (n) {
+    if(n < 1) return 0
+    let first = 0 
+    let second = 1
+    for (let i = 2; i <= n; i++) {
+        let temp = second
+        second = first + second
+        first = temp
+    }
+    return second
+};
