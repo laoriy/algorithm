@@ -73,8 +73,30 @@ var coinChange = function (coins, amount) {
         return minCount
     }
 
-    let ans = dfs(amount) 
+    let ans = dfs(amount)
     return ans === Infinity ? -1 : ans
+};
+
+
+/**
+ * @param {number[]} coins
+ * @param {number} amount
+ * @return {number}
+ */
+var coinChange = function (coins, amount) {
+    const dp = new Array(amount + 1).fill(Infinity) // dp[i]达成i 需要的最小硬币数
+    dp[0] = 0
+
+    for (let i = 0; i <= amount; i++) {
+        for (let j = 0; j < coins.length; j++) {
+            const coin = coins[j]
+            if (coin <= i) {
+                dp[i] = Math.min(dp[i], dp[i - coin] + 1)
+            }
+        }
+    }
+
+    return dp[amount] === Infinity ? -1 : dp[amount]
 };
 
 console.log(
@@ -82,3 +104,5 @@ console.log(
     coinChange([2], 3),
     coinChange([1], 0)
 )
+
+
