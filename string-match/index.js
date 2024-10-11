@@ -90,6 +90,14 @@ function sunday(m, n) {
     return -1;
 }
 
+/**
+ * shift-and
+ */
+
+function shiftAnd(m,n){
+    
+}
+
 
 console.log(
     bf("mnomnopqrstuvwxyzvwxyzeemnopqrstuvw", "mnopqrstuvwxyz"),
