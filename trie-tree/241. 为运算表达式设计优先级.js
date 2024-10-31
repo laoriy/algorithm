@@ -23,11 +23,36 @@
 (2*((3-4)*5)) = -10 
 (((2*3)-4)*5) = 10
  */
-
+const map = new Map()
 /**
  * @param {string} expression
  * @return {number[]}
  */
-var diffWaysToCompute = function(expression) {
-    
-};
+var diffWaysToCompute = function (expression) {
+    if (map.has(expression)) return map.get(expression)
+    const res = []
+    for (let i = 0; i < expression.length; i += 1) {
+        const char = expression[i]
+        if (char === '+' || char === '-' || char === '*') {
+            let left = diffWaysToCompute(expression.slice(0, i))
+            let right = diffWaysToCompute(expression.slice(i + 1))
+            for (let l of left) {
+                for (let r of right) {
+                    if (char === '+') {
+                        res.push(l + r)
+                    } else if (char === '-') {
+                        res.push(l - r)
+                    } else if (char === '*') {
+                        res.push(l * r)
+                    }
+                }
+            }
+        }
+    }
+    if (res.length === 0) res.push(Number(expression))
+    map.set(expression, res)
+    return res
+}
+
+console.log(diffWaysToCompute("2-1-1")) // [2,0]
+console.log(diffWaysToCompute("2*3-4*5")) // [-34,-14,-10,-10,10]
