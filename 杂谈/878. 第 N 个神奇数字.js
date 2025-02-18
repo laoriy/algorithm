@@ -22,12 +22,38 @@
  
  */
 
+const MOD = 1000000007;
+
+const gcb = (a, b) => {
+    if (b === 0) return a;
+    return gcb(b, a % b);
+}
+const lcm = (a, b) => {
+    return a * b / gcb(a, b);
+}
+
 /**
  * @param {number} n
  * @param {number} a
  * @param {number} b
  * @return {number}
  */
-var nthMagicalNumber = function(n, a, b) {
-    
+var nthMagicalNumber = function (n, a, b) {
+    let l = Math.min(a, b);
+    let r = n * Math.min(a, b);
+
+    while (l <= r) {
+        const mid = Math.floor((l + r) / 2);
+        const cnt = Math.floor(mid / a) + Math.floor(mid / b) - Math.floor(mid / lcm(a, b));
+        if (cnt < n) {
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
+    return l % MOD;
 };
+
+console.log(nthMagicalNumber(1, 2, 3)); // 2
+console.log(nthMagicalNumber(4, 2, 3)); // 6
+console.log(nthMagicalNumber(5, 2, 4)); // 10
